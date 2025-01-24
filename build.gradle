@@ -43,6 +43,8 @@ dependencies {
 
     implementation "org.mapstruct:mapstruct:1.5.5.Final"
     annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
 }
 
 tasks.named('test') {
