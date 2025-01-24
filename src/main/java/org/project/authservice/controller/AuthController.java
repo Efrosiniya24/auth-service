@@ -1,6 +1,7 @@
 package org.project.authservice.controller;
 
 import lombok.AllArgsConstructor;
+import org.project.authservice.dto.AuthenticateRequestDTO;
 import org.project.authservice.dto.RegistrationRequestDTO;
 import org.project.authservice.dto.ResponseDTO;
 import org.project.authservice.service.AuthService;
@@ -19,5 +20,10 @@ public class AuthController {
     @PostMapping("/signUp")
     public ResponseEntity<ResponseDTO> signUp(@RequestBody RegistrationRequestDTO request) {
         return ResponseEntity.ok(authService.signUp(request));
+    }
+
+    @PostMapping("/singIn")
+    public ResponseEntity<ResponseDTO> signIn(@RequestBody AuthenticateRequestDTO request){
+        return ResponseEntity.ok(authService.signIn(request));
     }
 }
