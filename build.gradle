@@ -33,18 +33,16 @@ dependencies {
 
     runtimeOnly 'org.postgresql:postgresql'
 
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-
-    implementation "org.mapstruct:mapstruct:1.5.5.Final"
-    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway:4.2.0'
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.0'
 }
 
 tasks.named('test') {
