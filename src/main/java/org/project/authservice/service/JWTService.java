@@ -45,7 +45,7 @@ public class JWTService {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) throws JwtException {
+    public Claims extractAllClaims(String token) throws JwtException {
         return Jwts
                 .parser()
                 .setSigningKey(getSignInKey())
