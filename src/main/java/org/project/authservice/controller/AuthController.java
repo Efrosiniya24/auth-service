@@ -44,4 +44,16 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/validate")
+    public ResponseEntity<Void> validateToken(@RequestBody String token) {
+        System.out.println(token);
+        boolean isValid = authService.validateToken(token);
+        if (isValid) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+
 }
