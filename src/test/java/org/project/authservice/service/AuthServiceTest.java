@@ -1,5 +1,6 @@
 package org.project.authservice.service;
 
+import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,10 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Date;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,6 +39,9 @@ class AuthServiceTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
+
+    @Mock
+    private Claims claims;
 
     @InjectMocks
     private AuthService authService;
@@ -88,7 +92,7 @@ class AuthServiceTest {
     }
 
     @Test
-    void signInExceptionTest(){
+    void signInExceptionTest() {
         //given
         String email = "test@test.com";
         AuthenticateRequestDTO request = new AuthenticateRequestDTO(email, "password");
@@ -98,6 +102,21 @@ class AuthServiceTest {
 
         //then
         assertThrows(UsernameNotFoundException.class, () -> authService.signIn(request));
+    }
+
+    @Test
+    void validateTokenTest() {
+        //given
+        String validToken = "token";
+
+        //when
+        when(jwtService.extractAllClaims(validToken)).thenReturn(claims);
+        when(claims.getExpiration()).thenReturn(new Date(System.currentTimeMillis() + 10000)); // Token not expired
+
+        //then
+        boolean isValid = authService.validateToken(validToken);
+        assertTrue(isValid);
+        verify(jwtService, times(1)).extractAllClaims(validToken);
     }
 
 }
