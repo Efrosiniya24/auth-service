@@ -12,11 +12,13 @@ import org.project.authservice.entity.UserEntity;
 import org.project.authservice.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -83,6 +85,19 @@ class AuthServiceTest {
 
         verify(userRepository, times(1)).findByEmail(email);
         verify(jwtService, times(1)).generateAccessToken(userEntity);
+    }
+
+    @Test
+    void signInExceptionTest(){
+        //given
+        String email = "test@test.com";
+        AuthenticateRequestDTO request = new AuthenticateRequestDTO(email, "password");
+
+        //when
+        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+
+        //then
+        assertThrows(UsernameNotFoundException.class, () -> authService.signIn(request));
     }
 
 }
