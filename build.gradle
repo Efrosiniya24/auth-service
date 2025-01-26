@@ -28,8 +28,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
     runtimeOnly 'org.postgresql:postgresql'
 
@@ -48,6 +48,8 @@ dependencies {
     implementation 'com.thoughtworks.xstream:xstream:1.4.21'
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+
+    testImplementation 'org.mockito:mockito-core:3.12.4'
 }
 
 tasks.named('test') {
