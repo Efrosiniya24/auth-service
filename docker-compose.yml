@@ -1,15 +1,18 @@
 services:
-  auth-service:
+  app:
     build:
       context: .
+    container_name: auth-service
     ports:
-      - "8083:8080"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-storage-db:5432/users_book
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=1111
-      - EUREKA_SERVER_URL=http://eureka-service:8761/eureka/
-    networks:
-      - books-network
+      - "8083:8083"
     depends_on:
-      - eureka-service
+      - db-books
+    restart: always
+  db-books:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: USERS
+    ports:
+      - "5433:5432"
